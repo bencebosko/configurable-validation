@@ -1,5 +1,5 @@
-## Validation
-This project contains custom bean validations for validating Java objects.
+## Configurable validations
+This project contains configurable bean validations for validating Java objects.
 
 ## Examples
 Here is an example for validating a _Patch_ request in a REST controller. Since we might update only specific fields, the validations should allow null values:
