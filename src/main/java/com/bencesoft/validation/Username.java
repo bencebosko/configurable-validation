@@ -15,7 +15,14 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Username {
+
     String message() default ValidationErrorCodes.USERNAME;
+
     boolean nullable() default false;
+
+    int minLength() default 5;
+
+    String allowedSpecialChars() default "_.";
+
     Class<?>[] groups() default {};
 }

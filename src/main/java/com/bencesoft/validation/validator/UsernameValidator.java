@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class UsernameValidator implements ConstraintValidator<Username, String> {
 
-    private static final int MIN_LENGTH = 5;
     private Username currentAnnotation;
 
     @Override
@@ -22,6 +21,10 @@ public class UsernameValidator implements ConstraintValidator<Username, String> 
         if (Objects.isNull(value)) {
             return currentAnnotation.nullable();
         }
-        return value.matches("^([a-z0-9_.]){" + MIN_LENGTH + ",}$");
+        if (value.length() < currentAnnotation.minLength()) {
+            return false;
+        }
+        var allowedSpecialChars = Objects.nonNull(currentAnnotation.allowedSpecialChars()) ? Objects.requireNonNull(currentAnnotation.allowedSpecialChars()) : "";
+        return value.matches("^([a-z0-9" + allowedSpecialChars + "])*$");
     }
 }
