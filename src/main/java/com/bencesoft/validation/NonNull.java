@@ -15,6 +15,8 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NonNull {
+
     String message() default ValidationErrorCodes.NON_NULL;
+
     Class<?>[] groups() default {};
 }

@@ -15,7 +15,10 @@ import jakarta.validation.Constraint;
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NonNegative {
+
     String message() default ValidationErrorCodes.NON_NEGATIVE;
+
     boolean nullable() default false;
+
     Class<?>[] groups() default {};
 }

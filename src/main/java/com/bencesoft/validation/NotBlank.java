@@ -15,7 +15,10 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NotBlank {
+
     String message() default ValidationErrorCodes.NOT_BLANK;
+
     boolean nullable() default false;
+
     Class<?>[] groups() default {};
 }

@@ -35,9 +35,6 @@ public class EmailValidatorTest {
     public void isValid_ShouldBeInvalidForNull() {
         // GIVEN
         String email = null;
-        Email annotation = Mockito.mock(Email.class);
-        Mockito.when(annotation.nullable()).thenReturn(false);
-        emailValidator.initialize(annotation);
         // THEN
         Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
     }

@@ -3,6 +3,7 @@ package com.bencesoft.validation.validator;
 import com.bencesoft.validation.NonNegative;
 import jakarta.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -11,11 +12,20 @@ public class NonNegativeValidatorTest {
     private final ConstraintValidatorContext constraintValidatorContext = Mockito.mock(ConstraintValidatorContext.class);
     private final NonNegativeValidator nonNegativeValidator = new NonNegativeValidator();
 
+    @BeforeEach
+    public void initMocks() {
+        NonNegative annotation = Mockito.mock(NonNegative.class);
+        Mockito.when(annotation.nullable()).thenReturn(false);
+        nonNegativeValidator.initialize(annotation);
+    }
+
     @Test
     public void issValid_ShouldBeValidForNull() {
         // GIVEN
         Double value = null;
-        nonNegativeValidator.initialize(getNonNegativeAnnotation(true));
+        NonNegative annotation = Mockito.mock(NonNegative.class);
+        Mockito.when(annotation.nullable()).thenReturn(true);
+        nonNegativeValidator.initialize(annotation);
         // THEN
         Assertions.assertTrue(nonNegativeValidator.isValid(value, constraintValidatorContext));
     }
@@ -24,11 +34,9 @@ public class NonNegativeValidatorTest {
     public void issValid_ShouldBeInvalidForNull() {
         // GIVEN
         Double value = null;
-        nonNegativeValidator.initialize(getNonNegativeAnnotation(false));
         // THEN
         Assertions.assertFalse(nonNegativeValidator.isValid(value, constraintValidatorContext));
     }
-
 
     @Test
     public void isValid_ShouldBeInvalidForNegativeNumbers() {
@@ -45,11 +53,5 @@ public class NonNegativeValidatorTest {
         Assertions.assertTrue(nonNegativeValidator.isValid(0.0001, constraintValidatorContext));
         Assertions.assertTrue(nonNegativeValidator.isValid(0, constraintValidatorContext));
         Assertions.assertTrue(nonNegativeValidator.isValid(-0, constraintValidatorContext));
-    }
-
-    private NonNegative getNonNegativeAnnotation(boolean isNullable) {
-        final NonNegative personName = Mockito.mock(NonNegative.class);
-        Mockito.when(personName.nullable()).thenReturn(isNullable);
-        return personName;
     }
 }
