@@ -20,7 +20,7 @@ public class PersonNameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidForNull() {
+    public void isValid_ShouldBeValidForNullIfSetNullable() {
         // GIVEN
         String personName = null;
         PersonName annotation = Mockito.mock(PersonName.class);
@@ -31,7 +31,7 @@ public class PersonNameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNull() {
+    public void isValid_ShouldBeInvalidForNullByDefault() {
         // GIVEN
         String personName = null;
         PersonName annotation = Mockito.mock(PersonName.class);
@@ -53,8 +53,12 @@ public class PersonNameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForInvalidChars() {
+    public void isValid_ShouldBeInvalidForSpecialChars() {
         Assertions.assertFalse(personNameValidator.isValid("Name!", constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeInvalidForNumbers() {
         Assertions.assertFalse(personNameValidator.isValid("Name123", constraintValidatorContext));
     }
 

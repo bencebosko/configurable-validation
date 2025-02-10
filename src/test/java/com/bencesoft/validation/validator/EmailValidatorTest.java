@@ -127,7 +127,7 @@ public class EmailValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidIfContainsUTF8() {
+    public void isValid_ShouldBeInvalidForUnicodeChars() {
         // GIVEN
         var email = "john.dóe-123_@Gmail-123.súb.com";
         // THEN

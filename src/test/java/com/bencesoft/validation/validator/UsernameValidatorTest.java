@@ -72,6 +72,11 @@ public class UsernameValidatorTest {
     }
 
     @Test
+    public void isValid_ShouldBeInvalidForUnicodeChars() {
+        Assertions.assertFalse(usernameValidator.isValid("john.dóe_1", constraintValidatorContext));
+    }
+
+    @Test
     public void isValid_ShouldBeValidWithDefaultOptions() {
         Assertions.assertTrue(usernameValidator.isValid("john.doe_1", constraintValidatorContext));
     }
