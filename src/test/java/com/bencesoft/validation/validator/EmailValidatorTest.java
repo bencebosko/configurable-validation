@@ -21,7 +21,7 @@ public class EmailValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidForNull() {
+    public void isValid_ShouldBeValidForNullIfSetNullable() {
         // GIVEN
         String email = null;
         Email annotation = Mockito.mock(Email.class);
@@ -32,7 +32,7 @@ public class EmailValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNull() {
+    public void isValid_ShouldBeInvalidForNullByDefault() {
         // GIVEN
         String email = null;
         // THEN
@@ -56,12 +56,23 @@ public class EmailValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidIfLocalPartContainsAllowedChars() {
+    public void isValid_ShouldNotAllowAnySpecialCharsIfSetNull() {
         // GIVEN
-        var allowedChars = "!#";
+        var email = "user_@gmail.com";
+        Email annotation = Mockito.mock(Email.class);
+        Mockito.when(annotation.allowedSpecialChars()).thenReturn(null);
+        emailValidator.initialize(annotation);
+        // THEN
+        Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeValidIfLocalPartContainsOnlyAllowedChars() {
+        // GIVEN
+        var allowedSpecialChars = "!#";
         var email = "#user!@gmail.com";
         Email annotation = Mockito.mock(Email.class);
-        Mockito.when(annotation.allowedSpecialChars()).thenReturn(allowedChars);
+        Mockito.when(annotation.allowedSpecialChars()).thenReturn(allowedSpecialChars);
         emailValidator.initialize(annotation);
         // THEN
         Assertions.assertTrue(emailValidator.isValid(email, constraintValidatorContext));
@@ -76,15 +87,7 @@ public class EmailValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidIfDomainContainsInvalidChar1() {
-        // GIVEN
-        var email = "user@gmail!.com";
-        // THEN
-        Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
-    }
-
-    @Test
-    public void isValid_ShouldBeInvalidIfDomainContainsInvalidChar2() {
+    public void isValid_ShouldBeInvalidIfDomainContainsInvalidChar() {
         // GIVEN
         var email = "user@gmail_.com";
         // THEN
@@ -116,7 +119,23 @@ public class EmailValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidIfEmailValid() {
+    public void isValid_ShouldBeInvalidIfContainsUppercase() {
+        // GIVEN
+        var email = "john.doe-123_@Gmail-123.sub.com";
+        // THEN
+        Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeInvalidIfContainsUTF8() {
+        // GIVEN
+        var email = "john.dóe-123_@Gmail-123.súb.com";
+        // THEN
+        Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeValidWithDefaultOptions() {
         // GIVEN
         var email = "john.doe-123_@gmail-123.sub.com";
         // THEN
