@@ -20,6 +20,10 @@ public class EmailValidator implements ConstraintValidator<Email, String> {
         if (Objects.isNull(value)) {
             return currentValidation.nullable();
         }
-        return value.matches("^([a-z0-9_.-])*@([a-z0-9.-]*)\\.([a-z]{2,3})$");
+        if (value.matches(".*(\\.\\.).*")) {
+            return false;
+        }
+        var allowedSpecialChars = Objects.nonNull(currentValidation.allowedSpecialChars()) ? currentValidation.allowedSpecialChars() : "";
+        return value.matches("^([a-z0-9" + allowedSpecialChars + "])*@([a-z0-9.-]*)\\.([a-z]{2,3})$");
     }
 }

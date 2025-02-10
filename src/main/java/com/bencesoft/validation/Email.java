@@ -20,5 +20,7 @@ public @interface Email {
 
     boolean nullable() default false;
 
+    String allowedSpecialChars() default "._-";
+
     Class<?>[] groups() default {};
 }

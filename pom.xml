@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bencesoft</groupId>
-    <artifactId>validation</artifactId>
+    <artifactId>configurable-validation</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
