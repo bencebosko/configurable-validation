@@ -47,19 +47,20 @@ public class PersonNameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNonLetterChars() {
+    public void isValid_ShouldBeInvalidIfFirstCharIsNotLetter() {
+        Assertions.assertFalse(personNameValidator.isValid(".", constraintValidatorContext));
+        Assertions.assertFalse(personNameValidator.isValid(" ", constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeInvalidForInvalidChars() {
         Assertions.assertFalse(personNameValidator.isValid("Name!", constraintValidatorContext));
         Assertions.assertFalse(personNameValidator.isValid("Name123", constraintValidatorContext));
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForDot() {
-        Assertions.assertFalse(personNameValidator.isValid(".", constraintValidatorContext));
-    }
-
-    @Test
-    public void isValid_ShouldBeValidForLetterWithDot() {
-        Assertions.assertTrue(personNameValidator.isValid("K.", constraintValidatorContext));
+    public void isValid_ShouldBeValidForLettersWithDot() {
+        Assertions.assertTrue(personNameValidator.isValid("K. Péter", constraintValidatorContext));
     }
 
     @Test
