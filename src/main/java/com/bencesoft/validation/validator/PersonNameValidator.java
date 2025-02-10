@@ -20,6 +20,6 @@ public class PersonNameValidator implements ConstraintValidator<PersonName, Stri
         if (Objects.isNull(value)) {
             return currentAnnotation.nullable();
         }
-        return value.matches("(\\p{L}|\\s)+");
+        return value.matches("(\\p{L}|\\s)+(\\p{L}|\\s|\\.)*");
     }
 }
