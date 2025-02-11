@@ -20,7 +20,7 @@ public class NonNegativeValidatorTest {
     }
 
     @Test
-    public void issValid_ShouldBeValidForNull() {
+    public void issValid_ShouldBeValidIfValueIsNullIfSetNullable() {
         // GIVEN
         Double value = null;
         NonNegative annotation = Mockito.mock(NonNegative.class);
@@ -31,7 +31,7 @@ public class NonNegativeValidatorTest {
     }
 
     @Test
-    public void issValid_ShouldBeInvalidForNull() {
+    public void issValid_ShouldBeInvalidIfValueIsNullByDefault() {
         // GIVEN
         Double value = null;
         // THEN
@@ -39,7 +39,7 @@ public class NonNegativeValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNegativeNumbers() {
+    public void isValid_ShouldBeInvalidIfNumberIsNegative() {
         Assertions.assertFalse(nonNegativeValidator.isValid(-1 * Double.MAX_VALUE, constraintValidatorContext));
         Assertions.assertFalse(nonNegativeValidator.isValid(-1 * Long.MAX_VALUE, constraintValidatorContext));
         Assertions.assertFalse(nonNegativeValidator.isValid(-0.0001, constraintValidatorContext));
@@ -47,7 +47,7 @@ public class NonNegativeValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidForNonNegativeNumbers() {
+    public void isValid_ShouldBeValidIfNumberIsNonNegative() {
         Assertions.assertTrue(nonNegativeValidator.isValid(Double.MAX_VALUE, constraintValidatorContext));
         Assertions.assertTrue(nonNegativeValidator.isValid(Long.MAX_VALUE, constraintValidatorContext));
         Assertions.assertTrue(nonNegativeValidator.isValid(0.0001, constraintValidatorContext));

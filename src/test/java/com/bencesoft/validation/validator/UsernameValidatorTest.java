@@ -22,7 +22,7 @@ public class UsernameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidForNullIfSetNullable() {
+    public void isValid_ShouldBeValidIfUsernameIsNullIfSetNullable() {
         // GIVEN
         String userName = null;
         Username annotation = Mockito.mock(Username.class);
@@ -33,11 +33,17 @@ public class UsernameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNullByDefault() {
+    public void isValid_ShouldBeInvalidIfUsernameIsNullByDefault() {
         // GIVEN
         String userName = null;
         // THEN
         Assertions.assertFalse(usernameValidator.isValid(userName, constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeInvalidIfUsernameIsBlank() {
+        Assertions.assertFalse(usernameValidator.isValid("", constraintValidatorContext));
+        Assertions.assertFalse(usernameValidator.isValid("  ", constraintValidatorContext));
     }
 
     @Test

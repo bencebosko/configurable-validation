@@ -25,6 +25,6 @@ public class UsernameValidator implements ConstraintValidator<Username, String> 
             return false;
         }
         var allowedSpecialChars = Objects.nonNull(currentAnnotation.allowedSpecialChars()) ? Objects.requireNonNull(currentAnnotation.allowedSpecialChars()) : "";
-        return value.matches("^([a-z0-9" + allowedSpecialChars + "])*$");
+        return value.matches("^([a-z0-9" + allowedSpecialChars + "])+$");
     }
 }

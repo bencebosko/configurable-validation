@@ -20,7 +20,7 @@ public class PersonNameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidForNullIfSetNullable() {
+    public void isValid_ShouldBeValidIfNameIsNullIfSetNullable() {
         // GIVEN
         String personName = null;
         PersonName annotation = Mockito.mock(PersonName.class);
@@ -31,7 +31,7 @@ public class PersonNameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNullByDefault() {
+    public void isValid_ShouldBeInvalidIfNameIsNullByDefault() {
         // GIVEN
         String personName = null;
         PersonName annotation = Mockito.mock(PersonName.class);
@@ -42,28 +42,28 @@ public class PersonNameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForEmptyString() {
+    public void isValid_ShouldBeInvalidIfNameIsBlank() {
         Assertions.assertFalse(personNameValidator.isValid("", constraintValidatorContext));
+        Assertions.assertFalse(personNameValidator.isValid("   ", constraintValidatorContext));
     }
 
     @Test
     public void isValid_ShouldBeInvalidIfFirstCharIsNotLetter() {
         Assertions.assertFalse(personNameValidator.isValid(".", constraintValidatorContext));
-        Assertions.assertFalse(personNameValidator.isValid(" ", constraintValidatorContext));
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForSpecialChars() {
+    public void isValid_ShouldBeInvalidIfContainSpecialChar() {
         Assertions.assertFalse(personNameValidator.isValid("Name!", constraintValidatorContext));
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNumbers() {
+    public void isValid_ShouldBeInvalidIfContainsNumber() {
         Assertions.assertFalse(personNameValidator.isValid("Name123", constraintValidatorContext));
     }
 
     @Test
-    public void isValid_ShouldBeValidForLettersWithDot() {
+    public void isValid_ShouldBeValidIfContainsLettersWithDot() {
         Assertions.assertTrue(personNameValidator.isValid("K. Péter", constraintValidatorContext));
     }
 
@@ -73,7 +73,7 @@ public class PersonNameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidForWhitespaceChars() {
+    public void isValid_ShouldBeValidWithWhitespaceBetweenLetters() {
         Assertions.assertTrue(personNameValidator.isValid("Ákos Mátyás", constraintValidatorContext));
     }
 }

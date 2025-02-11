@@ -20,7 +20,7 @@ public class NotBlankValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeValidForNull() {
+    public void isValid_ShouldBeValidForNullIfSetNullable() {
         // GIVEN
         String value = null;
         NotBlank annotation = Mockito.mock(NotBlank.class);
@@ -31,7 +31,7 @@ public class NotBlankValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNull() {
+    public void isValid_ShouldBeInvalidForNullByDefault() {
         // GIVEN
         String value = null;
         // THEN
@@ -39,12 +39,17 @@ public class NotBlankValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForEmptyString() {
+    public void isValid_ShouldBeInvalidIfStringIsEmpty() {
         Assertions.assertFalse(notBlankValidator.isValid("", constraintValidatorContext));
     }
 
     @Test
-    public void isValid_ShouldBeValidForNonEmptyString() {
+    public void isValid_ShouldBeInvalidIfOnlyContainsWhiteSpace() {
+        Assertions.assertFalse(notBlankValidator.isValid("   ", constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeValidIfStringIsNonEmpty() {
         Assertions.assertTrue(notBlankValidator.isValid("nonEmpty", constraintValidatorContext));
     }
 }

@@ -11,7 +11,7 @@ public class NonNullValidatorTest {
     private final NonNullValidator nonNullValidator = new NonNullValidator();
 
     @Test
-    public void issValid_ShouldBeInvalidForNull() {
+    public void issValid_ShouldBeInvalidIfValueIsNull() {
         // GIVEN
         String value = null;
         // THEN
@@ -19,7 +19,7 @@ public class NonNullValidatorTest {
     }
 
     @Test
-    public void issValid_ShouldBeValidForNonNull() {
+    public void issValid_ShouldBeValidIfValueIsNonNull() {
         // GIVEN
         String value = "";
         // THEN

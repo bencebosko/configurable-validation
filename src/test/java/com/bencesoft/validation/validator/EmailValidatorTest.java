@@ -32,9 +32,33 @@ public class EmailValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidForNullByDefault() {
+    public void isValid_ShouldBeInvalidIfEmailIsNullByDefault() {
         // GIVEN
         String email = null;
+        // THEN
+        Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeInvalidIfLocalPartIsEmpty() {
+        // GIVEN
+        String email = "@gmail.com";
+        // THEN
+        Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeInvalidIfDomainIsEmpty() {
+        // GIVEN
+        String email = "user@.com";
+        // THEN
+        Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeInvalidIfDomainEndIsEmpty() {
+        // GIVEN
+        String email = "user@gmail.";
         // THEN
         Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
     }
@@ -82,6 +106,14 @@ public class EmailValidatorTest {
     public void isValid_ShouldBeInvalidIfNotContainsAtSign() {
         // GIVEN
         var email = "user.gmail.com";
+        // THEN
+        Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeInvalidIfContainsMoreAtSign() {
+        // GIVEN
+        var email = "us@er@gmail.com";
         // THEN
         Assertions.assertFalse(emailValidator.isValid(email, constraintValidatorContext));
     }
