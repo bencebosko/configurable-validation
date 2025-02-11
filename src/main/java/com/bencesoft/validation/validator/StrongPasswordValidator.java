@@ -4,10 +4,11 @@ import com.bencesoft.validation.StrongPassword;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class StrongPasswordValidator implements ConstraintValidator<StrongPassword, String> {
 
-    private static final int MIN_LENGTH = 8;
     private StrongPassword currentAnnotation;
 
     @Override
@@ -21,9 +22,10 @@ public class StrongPasswordValidator implements ConstraintValidator<StrongPasswo
         if (Objects.isNull(password)) {
             return currentAnnotation.nullable();
         }
-        if (password.length() < MIN_LENGTH) {
+        if (password.length() < currentAnnotation.minLength()) {
             return false;
         }
+        final var allowedSpecialChars = getAllowedSpecialChars(currentAnnotation);
         var hasUppercase = false;
         var hasLowercase = false;
         var hasDigit = false;
@@ -38,13 +40,24 @@ public class StrongPasswordValidator implements ConstraintValidator<StrongPasswo
                 hasLowercase = true;
             } else if (Character.isDigit(ch)) {
                 hasDigit = true;
-            } else {
+            } else if (allowedSpecialChars.contains(ch)) {
                 hasSpecial = true;
-            }
-            if (hasUppercase && hasLowercase && hasDigit && hasSpecial) {
-                return true;
+            } else {
+                return false;
             }
         }
-        return false;
+        return isStrongPassword(currentAnnotation, hasUppercase, hasLowercase, hasDigit, hasSpecial);
+    }
+
+    private Set<Character> getAllowedSpecialChars(StrongPassword currentAnnotation) {
+        String specialChars = (Objects.nonNull(currentAnnotation.allowedSpecialChars()) ? currentAnnotation.allowedSpecialChars(): "");
+        return specialChars.chars().mapToObj(c -> (char) c).collect(Collectors.toSet());
+    }
+
+    private boolean isStrongPassword(StrongPassword currentAnnotation, boolean hasUppercase, boolean hasLowercase, boolean hasDigit, boolean hasSpecial) {
+        return (!currentAnnotation.needUppercase() || hasUppercase) &&
+               (!currentAnnotation.needLowercase() || hasLowercase) &&
+               (!currentAnnotation.needDigit() || hasDigit) &&
+               (!currentAnnotation.needSpecialChar() || hasSpecial);
     }
 }
