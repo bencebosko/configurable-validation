@@ -115,6 +115,14 @@ public class StrongPasswordValidatorTest {
     }
 
     @Test
+    public void isValid_ShouldNotAllowAnySpecialCharsIfSetNull() {
+        var password = "JohnDoe123.";
+        Mockito.when(annotation.allowedSpecialChars()).thenReturn(null);
+        strongPasswordValidator.initialize(annotation);
+        Assertions.assertFalse(strongPasswordValidator.isValid(password, constraintValidatorContext));
+    }
+
+    @Test
     public void isValid_ShouldBeInvalidIfContainsWhitespace() {
         var password = "JohnDoe123. ";
         Assertions.assertFalse(strongPasswordValidator.isValid(password, constraintValidatorContext));
