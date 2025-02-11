@@ -11,10 +11,10 @@ public class NotBlankValidatorTest {
 
     private final ConstraintValidatorContext constraintValidatorContext = Mockito.mock(ConstraintValidatorContext.class);
     private final NotBlankValidator notBlankValidator = new NotBlankValidator();
+    private final NotBlank annotation = Mockito.mock(NotBlank.class);
 
     @BeforeEach
     public void initMocks() {
-        NotBlank annotation = Mockito.mock(NotBlank.class);
         Mockito.when(annotation.nullable()).thenReturn(false);
         notBlankValidator.initialize(annotation);
     }
@@ -23,7 +23,6 @@ public class NotBlankValidatorTest {
     public void isValid_ShouldBeValidForNullIfSetNullable() {
         // GIVEN
         String value = null;
-        NotBlank annotation = Mockito.mock(NotBlank.class);
         Mockito.when(annotation.nullable()).thenReturn(true);
         notBlankValidator.initialize(annotation);
         // THEN

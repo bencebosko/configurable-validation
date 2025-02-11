@@ -11,10 +11,10 @@ public class PersonNameValidatorTest {
 
     private final ConstraintValidatorContext constraintValidatorContext = Mockito.mock(ConstraintValidatorContext.class);
     private final PersonNameValidator personNameValidator = new PersonNameValidator();
+    private final PersonName annotation = Mockito.mock(PersonName.class);
 
     @BeforeEach
     public void initMocks() {
-        PersonName annotation = Mockito.mock(PersonName.class);
         Mockito.when(annotation.nullable()).thenReturn(false);
         personNameValidator.initialize(annotation);
     }
@@ -23,7 +23,6 @@ public class PersonNameValidatorTest {
     public void isValid_ShouldBeValidIfNameIsNullIfSetNullable() {
         // GIVEN
         String personName = null;
-        PersonName annotation = Mockito.mock(PersonName.class);
         Mockito.when(annotation.nullable()).thenReturn(true);
         personNameValidator.initialize(annotation);
         // THEN
@@ -34,7 +33,6 @@ public class PersonNameValidatorTest {
     public void isValid_ShouldBeInvalidIfNameIsNullByDefault() {
         // GIVEN
         String personName = null;
-        PersonName annotation = Mockito.mock(PersonName.class);
         Mockito.when(annotation.nullable()).thenReturn(false);
         personNameValidator.initialize(annotation);
         // THEN

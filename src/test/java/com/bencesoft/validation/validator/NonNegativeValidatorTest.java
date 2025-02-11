@@ -11,10 +11,10 @@ public class NonNegativeValidatorTest {
 
     private final ConstraintValidatorContext constraintValidatorContext = Mockito.mock(ConstraintValidatorContext.class);
     private final NonNegativeValidator nonNegativeValidator = new NonNegativeValidator();
+    private final NonNegative annotation = Mockito.mock(NonNegative.class);
 
     @BeforeEach
     public void initMocks() {
-        NonNegative annotation = Mockito.mock(NonNegative.class);
         Mockito.when(annotation.nullable()).thenReturn(false);
         nonNegativeValidator.initialize(annotation);
     }
@@ -23,7 +23,6 @@ public class NonNegativeValidatorTest {
     public void issValid_ShouldBeValidIfValueIsNullIfSetNullable() {
         // GIVEN
         Double value = null;
-        NonNegative annotation = Mockito.mock(NonNegative.class);
         Mockito.when(annotation.nullable()).thenReturn(true);
         nonNegativeValidator.initialize(annotation);
         // THEN

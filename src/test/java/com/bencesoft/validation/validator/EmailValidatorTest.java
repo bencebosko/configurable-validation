@@ -11,10 +11,10 @@ public class EmailValidatorTest {
 
     private final ConstraintValidatorContext constraintValidatorContext = Mockito.mock(ConstraintValidatorContext.class);
     private final EmailValidator emailValidator = new EmailValidator();
+    private final Email annotation = Mockito.mock(Email.class);
 
     @BeforeEach
     public void initMocks() {
-        Email annotation = Mockito.mock(Email.class);
         Mockito.when(annotation.nullable()).thenReturn(false);
         Mockito.when(annotation.allowedSpecialChars()).thenReturn("._-");
         emailValidator.initialize(annotation);
@@ -24,7 +24,6 @@ public class EmailValidatorTest {
     public void isValid_ShouldBeValidForNullIfSetNullable() {
         // GIVEN
         String email = null;
-        Email annotation = Mockito.mock(Email.class);
         Mockito.when(annotation.nullable()).thenReturn(true);
         emailValidator.initialize(annotation);
         // THEN
@@ -83,7 +82,6 @@ public class EmailValidatorTest {
     public void isValid_ShouldNotAllowAnySpecialCharsIfSetNull() {
         // GIVEN
         var email = "user_@gmail.com";
-        Email annotation = Mockito.mock(Email.class);
         Mockito.when(annotation.allowedSpecialChars()).thenReturn(null);
         emailValidator.initialize(annotation);
         // THEN
@@ -95,7 +93,6 @@ public class EmailValidatorTest {
         // GIVEN
         var allowedSpecialChars = "!#";
         var email = "#user!@gmail.com";
-        Email annotation = Mockito.mock(Email.class);
         Mockito.when(annotation.allowedSpecialChars()).thenReturn(allowedSpecialChars);
         emailValidator.initialize(annotation);
         // THEN

@@ -11,10 +11,10 @@ public class UsernameValidatorTest {
 
     private final ConstraintValidatorContext constraintValidatorContext = Mockito.mock(ConstraintValidatorContext.class);
     private final UsernameValidator usernameValidator = new UsernameValidator();
+    private final Username annotation = Mockito.mock(Username.class);
 
     @BeforeEach
-    public void initTests() {
-        Username annotation = Mockito.mock(Username.class);
+    public void initMocks() {
         Mockito.when(annotation.nullable()).thenReturn(false);
         Mockito.when(annotation.allowedSpecialChars()).thenReturn("_.");
         Mockito.when(annotation.minLength()).thenReturn(5);
@@ -25,7 +25,6 @@ public class UsernameValidatorTest {
     public void isValid_ShouldBeValidIfUsernameIsNullIfSetNullable() {
         // GIVEN
         String userName = null;
-        Username annotation = Mockito.mock(Username.class);
         Mockito.when(annotation.nullable()).thenReturn(true);
         usernameValidator.initialize(annotation);
         // THEN
@@ -63,7 +62,6 @@ public class UsernameValidatorTest {
 
     @Test
     public void isValid_ShouldBeValidIfOnlyContainsAllowedChars() {
-        Username annotation = Mockito.mock(Username.class);
         Mockito.when(annotation.allowedSpecialChars()).thenReturn(".!#");
         usernameValidator.initialize(annotation);
         Assertions.assertFalse(usernameValidator.isValid("john.doe!#%", constraintValidatorContext));
@@ -71,7 +69,6 @@ public class UsernameValidatorTest {
 
     @Test
     public void isValid_ShouldNotAllowAnySpecialCharsWhenSetNull() {
-        Username annotation = Mockito.mock(Username.class);
         Mockito.when(annotation.allowedSpecialChars()).thenReturn(null);
         usernameValidator.initialize(annotation);
         Assertions.assertFalse(usernameValidator.isValid("john.doe_1", constraintValidatorContext));
