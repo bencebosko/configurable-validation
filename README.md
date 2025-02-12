@@ -1,5 +1,5 @@
 ## Configurable Validations
-This project contains **configurable** bean validations for **validating Java objects using annotations**. The validations have **default options** which can be set manually. Currently supported validations with their options:
+This project contains **configurable** bean validations for **validating Java objects using annotations**. The validations have default options which can be set manually. Currently supported validations with their options:
 
 * **Email**
     * `nullable() default false`
