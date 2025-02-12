@@ -1,7 +1,7 @@
 ## Usage
 The package can be used with **Java 11+**. Run `mvn clean package` to generate the jar file.
 
-## Configurable Validations
+## Description
 This project contains **configurable** bean validations for **validating Java objects using annotations**. The validations have default options which can be set manually. Currently supported validations with their options:
 
 * **Email**
