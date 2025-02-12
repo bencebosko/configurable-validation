@@ -30,7 +30,7 @@ public @interface StrongPassword {
 
     boolean needSpecialChar() default true;
 
-    String allowedSpecialChars() default "._-!?#@&%*";
+    String allowedSpecialChars() default "._-!?#@&%*^";
 
     Class<?>[] groups() default {};
 }
