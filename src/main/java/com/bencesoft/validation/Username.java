@@ -22,6 +22,8 @@ public @interface Username {
 
     int minLength() default 5;
 
+    boolean allowUppercase() default false;
+
     String allowedSpecialChars() default "_.";
 
     Class<?>[] groups() default {};

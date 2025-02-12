@@ -18,6 +18,7 @@ public class UsernameValidatorTest {
         Mockito.when(annotation.nullable()).thenReturn(false);
         Mockito.when(annotation.allowedSpecialChars()).thenReturn("_.");
         Mockito.when(annotation.minLength()).thenReturn(5);
+        Mockito.when(annotation.allowUppercase()).thenReturn(false);
         usernameValidator.initialize(annotation);
     }
 
@@ -56,8 +57,15 @@ public class UsernameValidatorTest {
     }
 
     @Test
-    public void isValid_ShouldBeInvalidIfContainsUppercaseLetter() {
+    public void isValid_ShouldBeInvalidIfContainsUppercaseLetterByDefault() {
         Assertions.assertFalse(usernameValidator.isValid("John.doe", constraintValidatorContext));
+    }
+
+    @Test
+    public void isValid_ShouldBeValidIfCUppercaseLetterIsAllowed() {
+        Mockito.when(annotation.allowUppercase()).thenReturn(true);
+        usernameValidator.initialize(annotation);
+        Assertions.assertTrue(usernameValidator.isValid("John.doe", constraintValidatorContext));
     }
 
     @Test
