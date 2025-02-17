@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 import com.bencesoft.validation.constants.ValidationErrorCodes;
 import com.bencesoft.validation.validator.StrongPasswordValidator;
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
 @Documented
 @Constraint(validatedBy = StrongPasswordValidator.class)
@@ -33,4 +34,6 @@ public @interface StrongPassword {
     String allowedSpecialChars() default "._-!?#@&%*^";
 
     Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }

@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 import com.bencesoft.validation.constants.ValidationErrorCodes;
 import com.bencesoft.validation.validator.NonNegativeValidator;
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
 @Documented
 @Constraint(validatedBy = NonNegativeValidator.class)
@@ -21,4 +22,6 @@ public @interface NonNegative {
     boolean nullable() default false;
 
     Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }

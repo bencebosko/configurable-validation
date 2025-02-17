@@ -3,6 +3,7 @@ package com.bencesoft.validation;
 import com.bencesoft.validation.constants.ValidationErrorCodes;
 import com.bencesoft.validation.validator.EmailValidator;
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -23,4 +24,6 @@ public @interface Email {
     String allowedSpecialChars() default "._-";
 
     Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }
